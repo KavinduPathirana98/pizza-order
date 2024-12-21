@@ -20,7 +20,8 @@ public class Payment {
     private Order order;
     
     private int paymentMethod; // "0-CreditCard", "1-DigitalWallet"
-    private Double amount;
+    private double amount;
+    
 	public int getId() {
 		return id;
 	}
@@ -39,10 +40,10 @@ public class Payment {
 	public void setPaymentMethod(int paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-	public Double getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(Double amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
     
