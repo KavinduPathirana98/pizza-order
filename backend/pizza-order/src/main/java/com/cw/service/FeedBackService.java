@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 import com.cw.dto.FeedBackDTO;
 import com.cw.entity.FeedBack;
 import com.cw.repository.FeedBackRepository;
+import com.cw.service_interface.IFeedBackService;
 
 @Service
-public class FeedBackService {
+public class FeedBackService implements IFeedBackService{
 
 	@Autowired
 	private FeedBackRepository _repo;
 
+	@Override
 	public FeedBackDTO addFeedBack(FeedBackDTO feedbackDTO) {
 		try {
 			FeedBack feedback = new FeedBack();
@@ -29,7 +31,7 @@ public class FeedBackService {
 		}
 
 	}
-
+	@Override
 	public List<FeedBackDTO> viewFeedBack() {
 		try {
 			List<FeedBackDTO> response = new ArrayList<>();

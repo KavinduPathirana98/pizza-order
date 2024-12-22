@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 import com.cw.dto.PizzaDTO;
 import com.cw.entity.Pizza;
 import com.cw.repository.PizzaRepository;
+import com.cw.service_interface.IPizzaService;
 
 @Service
-public class PizzaService {
+public class PizzaService implements IPizzaService {
 
 	@Autowired
 	private PizzaRepository _repo;
 
+	@Override
 	public PizzaDTO addPizza(PizzaDTO pizzaDTO) {
 		try {
 			Pizza pizza = new Pizza();
@@ -30,7 +32,8 @@ public class PizzaService {
 		}
 
 	}
-
+	
+	@Override
 	public PizzaDTO updatePizza(PizzaDTO pizzaDTO) {
 		try {
 			Pizza pizza = new Pizza();
@@ -44,7 +47,7 @@ public class PizzaService {
 		}
 
 	}
-
+	@Override
 	public List<PizzaDTO> getUserPizza(int userId) {
 		try {
 			List<PizzaDTO> response = new ArrayList<>();

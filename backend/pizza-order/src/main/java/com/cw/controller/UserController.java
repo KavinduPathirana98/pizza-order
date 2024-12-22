@@ -12,14 +12,14 @@ import com.cw.dto.UserDTO;
 import com.cw.service_interface.IUserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class UserController {
 	@Autowired
 	private IUserService _service;
 
 	
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseDTO loginUser(@RequestBody UserDTO userDTO) {
 
 		try {
@@ -30,7 +30,7 @@ public class UserController {
 		}
 
 	}
-	@PostMapping
+	@PostMapping("/save")
 	public ResponseDTO saveUser(@RequestBody UserDTO userDTO) {
 
 		try {

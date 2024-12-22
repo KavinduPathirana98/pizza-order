@@ -5,110 +5,106 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pizza {
 
-	 	@Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	    private String name;
-	    private String crust;
-	    private String sauce;
-	    private String toppings;
-	    private String cheese;
-	    private String size;
-	    private double price;
-	    private boolean favourite;
-	    
-	    @OneToMany
-	    @JoinColumn(name = "userId")
-	    private User user;
+    private String name;
+    private String crust;
+    private String sauce;
+    private String toppings;
+    private String cheese;
+    private String size;
+    private double price;
+    private boolean favourite;
 
-		public int getId() {
-			return id;
-		}
+    @ManyToOne
+    @JoinColumn(name = "userId") // The user who created the pizza
+    private User user;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
 
-		public String getName() {
-			return name;
-		}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+    public String getName() {
+        return name;
+    }
 
-		public String getCrust() {
-			return crust;
-		}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-		public void setCrust(String crust) {
-			this.crust = crust;
-		}
+    public String getCrust() {
+        return crust;
+    }
 
-		public String getSauce() {
-			return sauce;
-		}
+    public void setCrust(String crust) {
+        this.crust = crust;
+    }
 
-		public void setSauce(String sauce) {
-			this.sauce = sauce;
-		}
+    public String getSauce() {
+        return sauce;
+    }
 
-		public String getToppings() {
-			return toppings;
-		}
+    public void setSauce(String sauce) {
+        this.sauce = sauce;
+    }
 
-		public void setToppings(String toppings) {
-			this.toppings = toppings;
-		}
+    public String getToppings() {
+        return toppings;
+    }
 
-		public String getCheese() {
-			return cheese;
-		}
+    public void setToppings(String toppings) {
+        this.toppings = toppings;
+    }
 
-		public void setCheese(String cheese) {
-			this.cheese = cheese;
-		}
+    public String getCheese() {
+        return cheese;
+    }
 
-		public String getSize() {
-			return size;
-		}
+    public void setCheese(String cheese) {
+        this.cheese = cheese;
+    }
 
-		public void setSize(String size) {
-			this.size = size;
-		}
+    public String getSize() {
+        return size;
+    }
 
-		public double getPrice() {
-			return price;
-		}
+    public void setSize(String size) {
+        this.size = size;
+    }
 
-		public void setPrice(double price) {
-			this.price = price;
-		}
+    public double getPrice() {
+        return price;
+    }
 
-		public boolean isFavourite() {
-			return favourite;
-		}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-		public void setFavourite(boolean favourite) {
-			this.favourite = favourite;
-		}
+    public boolean isFavourite() {
+        return favourite;
+    }
 
-		public User getUser() {
-			return user;
-		}
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
 
-		public void setUser(User user) {
-			this.user = user;
-		}
-	   
-	  
-	  
-	    
-	    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

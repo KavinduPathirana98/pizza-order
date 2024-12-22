@@ -1,5 +1,7 @@
 package com.cw.dto;
 
+import com.cw.entity.User;
+
 public class PizzaDTO {
 
 	
@@ -13,8 +15,17 @@ public class PizzaDTO {
 	    private String size;
 	    private double price;
 	    private boolean favourite;
+	    private User user;
 	    
-	    public PizzaDTO()
+	    public User getUser() {
+			return user;
+		}
+
+		public void setUser(User user) {
+			this.user = user;
+		}
+
+		public PizzaDTO()
 	    {
 	    	
 	    }

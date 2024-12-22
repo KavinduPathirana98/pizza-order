@@ -20,7 +20,7 @@ public class OrderController {
 
 	@Autowired
 	private IOrderService _service;
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseDTO addOrder(@RequestBody OrderDTO orderDTO,@RequestParam int paymentMethod,@RequestParam double amount) {
 
 		try {
@@ -31,7 +31,7 @@ public class OrderController {
 		}
 
 	}
-	@PostMapping
+	@PostMapping("/update")
 	public ResponseDTO updateOrder(@RequestBody OrderDTO orderDTO) {
 
 		try {

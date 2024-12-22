@@ -10,6 +10,6 @@ import com.cw.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-    @Query("SELECT * FROM User u WHERE u.email = :email AND u.password = :password")
+    @Query("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }

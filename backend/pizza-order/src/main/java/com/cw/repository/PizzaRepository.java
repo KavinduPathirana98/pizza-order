@@ -12,8 +12,8 @@ import com.cw.entity.Pizza;
 @Repository
 public interface PizzaRepository extends JpaRepository<Pizza, Integer>  {
 
-    @Query("SELECT * FROM Pizza P WHERE P.userId = :userId")
-    List<Pizza> findPizzaByUserId(@Param("userId") int userId);
+	@Query("SELECT P FROM Pizza P WHERE P.user.id = :userId")
+	List<Pizza> findPizzaByUserId(@Param("userId") int userId);
     
 
 }

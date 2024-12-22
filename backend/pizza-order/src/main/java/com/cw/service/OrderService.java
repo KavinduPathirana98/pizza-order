@@ -25,6 +25,7 @@ public class OrderService implements IOrderService {
 //	@Autowired
 //	private PizzaRepository _pizzaRepo;
 
+	@Override
 	// Create Order
 	public OrderDTO addOrder(OrderDTO orderDTO, int paymentMethod, double amount) {
 		try {
@@ -46,29 +47,29 @@ public class OrderService implements IOrderService {
 			paymentReturn = _paymentRepo.save(payment);
 
 			// Update Loyalty Points
-			LoyaltyAccount existing = new LoyaltyAccount();
-			existing = _loyaltyRepo.findLoyaltyAccountByUserId(orderDTO.getPizza().getUser().getId());
+			LoyaltyAccount existing = _loyaltyRepo.findLoyaltyAccountByUserId(orderDTO.getPizza().getUser().getId());
+			System.out.println(existing + "hi");
 
 			// Point Calculation
 			int newPoints = (int) amount / 1000;
 
 			if (existing != null) {
+			    // Updating Points Before Sending to Database
+			    newPoints = newPoints + existing.getPoints();
 
-				// Updating Points Before Sending to Dtabase
-				newPoints = newPoints + existing.getPoints();
+			    // Add Points into model
+			    existing.setPoints(newPoints);
 
-				// Add Points into model
-				existing.setPoints(newPoints);
+			    // Updating Data
+			    _loyaltyRepo.save(existing);
+			} else {
+			    // If existing is null, create a new LoyaltyAccount
+			    existing = new LoyaltyAccount();
+			    existing.setPoints(newPoints);
 
-				// Updating Data
-				_loyaltyRepo.save(existing);
-			} else if (existing == null) {
-				// Add data into model
-				existing.setPoints(newPoints);
-
-				existing.setUser(orderDTO.getPizza().getUser());
-				// Insert Data
-				_loyaltyRepo.save(existing);
+			    existing.setUser(orderDTO.getPizza().getUser());
+			    // Insert Data
+			    _loyaltyRepo.save(existing);
 			}
 
 			return returnObect;
@@ -78,6 +79,7 @@ public class OrderService implements IOrderService {
 
 	}
 
+	@Override
 	// Update Order
 	public OrderDTO updateOrder(OrderDTO orderDTO) {
 		try {

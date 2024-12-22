@@ -10,14 +10,16 @@ import org.springframework.stereotype.Service;
 import com.cw.dto.PromotionDTO;
 import com.cw.entity.Promotion;
 import com.cw.repository.PromotionRepository;
+import com.cw.service_interface.IPromotionService;
 
 @Service
-public class PromotionService {
+public class PromotionService implements IPromotionService{
 
 	@Autowired
 	private PromotionRepository _repo;
 
-	PromotionDTO addPromotion(PromotionDTO promotionDTO) {
+	@Override
+	public PromotionDTO addPromotion(PromotionDTO promotionDTO) {
 		try {
 			PromotionDTO response = new PromotionDTO();
 			Promotion data = new Promotion();
@@ -29,8 +31,8 @@ public class PromotionService {
 		}
 
 	}
-
-	List<PromotionDTO> viewPromotion() {
+	@Override
+	public List<PromotionDTO> viewPromotion() {
 		try {
 			List<PromotionDTO> response = new ArrayList<>();
 			BeanUtils.copyProperties(_repo.findAll(), response);
@@ -40,8 +42,8 @@ public class PromotionService {
 		}
 
 	}
-
-	PromotionDTO updatePromotion(PromotionDTO promotionDTO) {
+	@Override
+	public PromotionDTO updatePromotion(PromotionDTO promotionDTO) {
 		try {
 			PromotionDTO response = new PromotionDTO();
 			Promotion data = new Promotion();
@@ -54,7 +56,7 @@ public class PromotionService {
 
 	}
 
-	PromotionDTO deletePromotion(int id) {
+	public	PromotionDTO deletePromotion(int id) {
 		try {
 			PromotionDTO response = new PromotionDTO();
 			Promotion data = new Promotion();

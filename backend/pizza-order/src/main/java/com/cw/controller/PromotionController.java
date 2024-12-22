@@ -25,7 +25,7 @@ public class PromotionController {
 	
 	@Autowired
 	private IPromotionService _service;
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseDTO addPromotion(@RequestBody PromotionDTO promotionDTO,@RequestParam int paymentMethod,@RequestParam double amount) {
 
 		try {
@@ -36,7 +36,7 @@ public class PromotionController {
 		}
 
 	}
-	@PostMapping
+	@PostMapping("/update")
 	public ResponseDTO updatePromotion(@RequestBody PromotionDTO promotionDTO) {
 
 		try {

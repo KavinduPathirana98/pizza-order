@@ -15,6 +15,7 @@ public class UserService implements IUserService {
 	@Autowired
 	private UserRepository _repo;
 
+	@Override
 	// Create User
 	public UserDTO addUser(UserDTO userDTO) {
 		try {
@@ -30,6 +31,7 @@ public class UserService implements IUserService {
 
 	}
 
+	@Override
 	// Login User
 	public UserDTO loginUser(UserDTO userDTO) {
 		try {
