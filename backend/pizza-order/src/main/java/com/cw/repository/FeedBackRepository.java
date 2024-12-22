@@ -3,9 +3,9 @@ package com.cw.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cw.entity.Payment;
+import com.cw.entity.FeedBack;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Integer>  {
+public interface FeedBackRepository extends JpaRepository<FeedBack, Integer>{
 
 }

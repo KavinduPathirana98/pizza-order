@@ -14,30 +14,34 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UserRepository _repo;
-	
-	//Create User
-	public UserDTO addUser(UserDTO userDTO)
-	{
-		  User user=new User();
-		  BeanUtils.copyProperties(userDTO, user,"id");
-		  User response = _repo.save(user);
-		  UserDTO returnObect=  new UserDTO();
-		  BeanUtils.copyProperties(response, returnObect);
-		  return returnObect;
-		  
-	
+
+	// Create User
+	public UserDTO addUser(UserDTO userDTO) {
+		try {
+			User user = new User();
+			BeanUtils.copyProperties(userDTO, user, "id");
+			User response = _repo.save(user);
+			UserDTO returnObect = new UserDTO();
+			BeanUtils.copyProperties(response, returnObect);
+			return returnObect;
+		} catch (Exception ex) {
+			throw ex;
+		}
+
 	}
-	
-	//Login User
-	public UserDTO loginUser(UserDTO userDTO)
-	{
-		
-		  User user=new User();
-		  BeanUtils.copyProperties(userDTO, user,"id");
-		  User response = _repo.findByEmailAndPassword(userDTO.getEmail(),userDTO.getPassword());
-		  UserDTO returnObect=  new UserDTO();
-		  BeanUtils.copyProperties(response, returnObect);
-		  return returnObect;
+
+	// Login User
+	public UserDTO loginUser(UserDTO userDTO) {
+		try {
+			User user = new User();
+			BeanUtils.copyProperties(userDTO, user, "id");
+			User response = _repo.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
+			UserDTO returnObect = new UserDTO();
+			BeanUtils.copyProperties(response, returnObect);
+			return returnObect;
+		} catch (Exception ex) {
+			throw ex;
+		}
+
 	}
-}
-;
+};

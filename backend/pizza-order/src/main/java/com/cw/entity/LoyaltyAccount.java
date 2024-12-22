@@ -18,7 +18,7 @@ public class LoyaltyAccount {
     @JoinColumn(name = "userId")
     private User user;
     
-    private Integer points;
+    private int points;
 
 	public int getId() {
 		return id;
@@ -36,11 +36,11 @@ public class LoyaltyAccount {
 		this.user = user;
 	}
 
-	public Integer getPoints() {
+	public int getPoints() {
 		return points;
 	}
 
-	public void setPoints(Integer points) {
+	public void setPoints(int points) {
 		this.points = points;
 	}
     

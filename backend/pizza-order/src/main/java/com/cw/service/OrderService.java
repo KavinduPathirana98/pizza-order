@@ -16,7 +16,6 @@ import com.cw.service_interface.IOrderService;
 @Service
 public class OrderService implements IOrderService {
 
-	
 	@Autowired
 	private OrderRepository _repo;
 	@Autowired
@@ -25,72 +24,72 @@ public class OrderService implements IOrderService {
 	private PaymentRepository _paymentRepo;
 //	@Autowired
 //	private PizzaRepository _pizzaRepo;
-	
-	//Create Order
-	public OrderDTO addOrder(OrderDTO orderDTO, int paymentMethod, double amount)
-	{
-		//Manipulate Order Data
-		  Order order=new Order();
-		  BeanUtils.copyProperties(orderDTO, order,"id");
-		  Order response = _repo.save(order);
-		  OrderDTO returnObect=  new OrderDTO();
-		  BeanUtils.copyProperties(response, returnObect);
-		  
-		  //Insert Payment Details
-		  Payment payment=new Payment();
-		  
-		  payment.setOrder(response);
-		  payment.setAmount(amount);
-		  payment.setPaymentMethod(paymentMethod);
-		  
-		  Payment  paymentReturn = new Payment();
-		  paymentReturn=_paymentRepo.save(payment);
-		  
-		  //Update Loyalty Points
-		  LoyaltyAccount existing=new LoyaltyAccount();
-		  existing=_loyaltyRepo.findLoyaltyAccountByUserId(orderDTO.getPizza().getUser().getId());
-		  
-		  //Point Calculation
-		  int newPoints=(int)amount/1000;
-		  
-		  if(existing!=null)
-		  {
 
-			  
-			  //Updating Points Before Sending to Dtabase
-			  newPoints=newPoints+existing.getPoints();
-			  
-			  //Add Points into model
-			  existing.setPoints(newPoints);
-			  
-			  //Updating Data
-			  _loyaltyRepo.save(existing);
-		  }
-		  else if(existing==null)
-		  {
-			  //Add data into model
-			  existing.setPoints(newPoints);
-			  
-			  existing.setUser(orderDTO.getPizza().getUser());
-			  //Insert Data
-			  _loyaltyRepo.save(existing); 
-		  }
-		  
-		  
-		  return returnObect;
-		  
-	
+	// Create Order
+	public OrderDTO addOrder(OrderDTO orderDTO, int paymentMethod, double amount) {
+		try {
+			// Manipulate Order Data
+			Order order = new Order();
+			BeanUtils.copyProperties(orderDTO, order, "id");
+			Order response = _repo.save(order);
+			OrderDTO returnObect = new OrderDTO();
+			BeanUtils.copyProperties(response, returnObect);
+
+			// Insert Payment Details
+			Payment payment = new Payment();
+
+			payment.setOrder(response);
+			payment.setAmount(amount);
+			payment.setPaymentMethod(paymentMethod);
+
+			Payment paymentReturn = new Payment();
+			paymentReturn = _paymentRepo.save(payment);
+
+			// Update Loyalty Points
+			LoyaltyAccount existing = new LoyaltyAccount();
+			existing = _loyaltyRepo.findLoyaltyAccountByUserId(orderDTO.getPizza().getUser().getId());
+
+			// Point Calculation
+			int newPoints = (int) amount / 1000;
+
+			if (existing != null) {
+
+				// Updating Points Before Sending to Dtabase
+				newPoints = newPoints + existing.getPoints();
+
+				// Add Points into model
+				existing.setPoints(newPoints);
+
+				// Updating Data
+				_loyaltyRepo.save(existing);
+			} else if (existing == null) {
+				// Add data into model
+				existing.setPoints(newPoints);
+
+				existing.setUser(orderDTO.getPizza().getUser());
+				// Insert Data
+				_loyaltyRepo.save(existing);
+			}
+
+			return returnObect;
+		} catch (Exception ex) {
+			throw ex;
+		}
+
 	}
-	
-	//Update Order
-	public OrderDTO updateOrder(OrderDTO orderDTO)
-	{
-		
-		  Order order=new Order();
-		  BeanUtils.copyProperties(orderDTO, order);
-		  Order response =_repo.save(_repo.findById(orderDTO.getId()).get());
-		  OrderDTO returnObect=  new OrderDTO();
-		  BeanUtils.copyProperties(response, returnObect);
-		  return returnObect;
+
+	// Update Order
+	public OrderDTO updateOrder(OrderDTO orderDTO) {
+		try {
+			Order order = new Order();
+			BeanUtils.copyProperties(orderDTO, order);
+			Order response = _repo.save(_repo.findById(orderDTO.getId()).get());
+			OrderDTO returnObect = new OrderDTO();
+			BeanUtils.copyProperties(response, returnObect);
+			return returnObect;
+		} catch (Exception ex) {
+			throw ex;
+		}
+
 	}
 }

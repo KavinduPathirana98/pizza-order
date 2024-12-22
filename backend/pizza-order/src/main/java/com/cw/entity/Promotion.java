@@ -14,7 +14,7 @@ public class Promotion {
 	private int id;
 	
 	private String type;
-	private Double discountPrice;
+	private double discountPrice;
 	public int getId() {
 		return id;
 	}

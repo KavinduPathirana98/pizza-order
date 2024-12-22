@@ -9,36 +9,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.cw.dto.PizzaDTO;
+
+import com.cw.dto.FeedBackDTO;
 import com.cw.dto.ResponseDTO;
-import com.cw.service_interface.IPizzaService;
+import com.cw.service_interface.IFeedBackService;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
-@RequestMapping("/api/pizza")
-public class PizzaController {
+@RequestMapping("/api/feedback")
+public class FeedbackController {
+
 	
 	@Autowired
-	private IPizzaService _service;
-
+	private IFeedBackService _service;
 	
 	@PostMapping
-	public ResponseDTO addPizza(@RequestBody PizzaDTO pizzaDTO) {
+	public ResponseDTO addFeedBack(@RequestBody FeedBackDTO feedBackDTO) {
 
 		try {
-			PizzaDTO response = _service.addPizza(pizzaDTO);
-			return new ResponseDTO(1, "Success", response);
-		} catch (Exception ex) {
-			return new ResponseDTO(0, ex.getMessage().toString(), null);
-		}
-
-	}
-	@PostMapping
-	public ResponseDTO updatePizza(@RequestBody PizzaDTO pizzaDTO) {
-
-		try {
-			PizzaDTO response = _service.updatePizza(pizzaDTO);
+			
+			FeedBackDTO response = _service.addFeedBack(feedBackDTO);
 			return new ResponseDTO(1, "Success", response);
 		} catch (Exception ex) {
 			return new ResponseDTO(0, ex.getMessage().toString(), null);
@@ -46,16 +37,17 @@ public class PizzaController {
 
 	}
 	
+	//Admin Function to get all feebacks
 	@GetMapping
-	public ResponseDTO getUserPizza(@RequestBody int userId) {
+	public ResponseDTO viewFeedBack() {
 
 		try {
-			List<PizzaDTO> response = _service.getUserPizza(userId);
+			
+			List<FeedBackDTO> response = _service.viewFeedBack();
 			return new ResponseDTO(1, "Success", response);
 		} catch (Exception ex) {
 			return new ResponseDTO(0, ex.getMessage().toString(), null);
 		}
 
 	}
-
 }
