@@ -1,6 +1,39 @@
+import { Form, Input } from "antd";
+import { useForm } from "antd/es/form/Form";
 import { Fragment } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, FormGroup } from "react-bootstrap";
+import { msgRequired } from "../constants";
+import { UserLogin } from "../service/userService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Login = () => {
+  const navigate = useNavigate();
+  const [form] = useForm();
+  const login = async () => {
+    try {
+      const formValues = await form.validateFields();
+      formValues.id = 0;
+      formValues.fName = "";
+      formValues.lName = "";
+      formValues.type = 1;
+      await UserLogin(formValues)
+        .then((response) => {
+          console.log(response);
+          if (response.data.responseCode == 1) {
+            localStorage.setItem("authenticated", true);
+            localStorage.setItem("user", JSON.stringify(response.data.data));
+            navigate("/home");
+            toast.success("Login Successfully");
+          } else {
+            toast.error("Email or Password is incorrect");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {}
+  };
+
   return (
     <Fragment>
       <Container
@@ -33,28 +66,36 @@ const Login = () => {
           </Col>
 
           <Col md={6} className="p-4">
-            <h4 className="mb-4 text-center">Sign Up</h4>
-            <Form>
-              <Form.Group className="mb-3" controlId="formUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" placeholder="Enter your username" />
-              </Form.Group>
+            <h4 className="mb-4 text-center">Login</h4>
+            <Form form={form}>
+              <FormGroup className="mb-3" controlId="formEmail">
+                <label>Email</label>
+                <Form.Item
+                  name="email"
+                  rules={[{ required: true, message: msgRequired }]}
+                >
+                  <Input type="email" placeholder="Enter your email" />
+                </Form.Item>
+              </FormGroup>
 
-              <Form.Group className="mb-3" controlId="formEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email" />
-              </Form.Group>
+              <FormGroup className="mb-3" controlId="formPassword">
+                <label>Password</label>
+                <Form.Item
+                  name="password"
+                  rules={[{ required: true, message: msgRequired }]}
+                >
+                  <Input type="password" placeholder="Enter your password" />
+                </Form.Item>
+              </FormGroup>
 
-              <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter your password"
-                />
-              </Form.Group>
-
-              <Button variant="danger" type="submit" className="w-100">
-                Sign Up
+              <Button
+                variant="danger"
+                onClick={() => {
+                  login();
+                }}
+                className="w-100"
+              >
+                Login
               </Button>
             </Form>
           </Col>

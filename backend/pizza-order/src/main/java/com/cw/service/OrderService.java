@@ -1,5 +1,8 @@
 package com.cw.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,22 +57,22 @@ public class OrderService implements IOrderService {
 			int newPoints = (int) amount / 1000;
 
 			if (existing != null) {
-			    // Updating Points Before Sending to Database
-			    newPoints = newPoints + existing.getPoints();
+				// Updating Points Before Sending to Database
+				newPoints = newPoints + existing.getPoints();
 
-			    // Add Points into model
-			    existing.setPoints(newPoints);
+				// Add Points into model
+				existing.setPoints(newPoints);
 
-			    // Updating Data
-			    _loyaltyRepo.save(existing);
+				// Updating Data
+				_loyaltyRepo.save(existing);
 			} else {
-			    // If existing is null, create a new LoyaltyAccount
-			    existing = new LoyaltyAccount();
-			    existing.setPoints(newPoints);
+				// If existing is null, create a new LoyaltyAccount
+				existing = new LoyaltyAccount();
+				existing.setPoints(newPoints);
 
-			    existing.setUser(orderDTO.getPizza().getUser());
-			    // Insert Data
-			    _loyaltyRepo.save(existing);
+				existing.setUser(orderDTO.getPizza().getUser());
+				// Insert Data
+				_loyaltyRepo.save(existing);
 			}
 
 			return returnObect;
@@ -89,6 +92,19 @@ public class OrderService implements IOrderService {
 			OrderDTO returnObect = new OrderDTO();
 			BeanUtils.copyProperties(response, returnObect);
 			return returnObect;
+		} catch (Exception ex) {
+			throw ex;
+		}
+
+	}
+
+	@Override
+	public List<OrderDTO> viewMyOrders(List<Integer> pizzaIds) {
+		try {
+			List<OrderDTO> response = new ArrayList<>();
+			List<Order> order = _repo.findOrdersByPizzaIds(pizzaIds);
+			BeanUtils.copyProperties(order, response);
+			return response;
 		} catch (Exception ex) {
 			throw ex;
 		}

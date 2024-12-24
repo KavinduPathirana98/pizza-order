@@ -1,63 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
-import Home from './pages/home';
-import Login from './pages/login';
-import { useState } from 'react';
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import SignUp from './pages/signup';
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+import { useState } from "react";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import MakePizza from "./pages/make-pizza";
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
+function App() {
+  const authenticated = localStorage.getItem("authenticated");
+
+  // Navigation Bar Component
+  const NavigationBar = () => (
+    <Navbar bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="/home">Pizza Shop</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/home">Home</Nav.Link>
+          <Nav.Link href="/make">Make Pizza</Nav.Link>
+          <Nav.Link href="/treatments">Orders</Nav.Link>
+          <Nav.Link href="/invoice">Logout</Nav.Link>
+        </Nav>
+      </Container>
+    </Navbar>
+  );
+
+  // Wrapper Component to conditionally render the NavigationBar
+  const Layout = ({ children }) => {
+    const location = useLocation();
+    const noNavPaths = ["/", "/signup"]; // Paths without the navigation bar
+
+    return (
+      <>
+        {!noNavPaths.includes(location.pathname) && <NavigationBar />}
+        {children}
+      </>
+    );
   };
 
   return (
-    <>
     <Router>
-      {/* <ToastContainer></ToastContainer>
-      <>
-        <Navbar bg="dark" data-bs-theme="dark">
-          <Container>
-            <Navbar.Brand href="/appointments">Aurora Skin Care </Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="/appointments">Appointments</Nav.Link>
-              <Nav.Link href="/patients">Patients</Nav.Link>
-              <Nav.Link href="/treatments">Treatments</Nav.Link>
-              <Nav.Link href="/invoice">Invoices</Nav.Link>
-            </Nav>
-          </Container>
-        </Navbar>
-      </> */}
-      <div>
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/appointments">Appointments</Link>
-            </li>
-            <li>
-              <Link to="/patients">Patients</Link>
-            </li>
-            <li>
-              <Link to="/treatments">Treatments</Link>
-            </li>
-            <li>
-              <Link to="/invoice">Invoice</Link>
-            </li>
-          </ul>
-        </nav> */}
-
-        {/* Define routes for the different components */}
+      <ToastContainer />
+      <Layout>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/patients" element={<Home />} />
-          {/* <Route path="/treatments" element={<Treatments />} />
-          <Route path="/invoice" element={<Invoice />} /> */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/make" element={<MakePizza />} />
+
+          {/* Additional routes can be added here */}
         </Routes>
-      </div>
+      </Layout>
     </Router>
-    </>
   );
 }
 

@@ -1,5 +1,7 @@
 package com.cw.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,4 +45,15 @@ public class OrderController {
 
 	}
 	
+	@PostMapping("/viewMyOrders")
+	public ResponseDTO viewMyOrders(@RequestParam  List<Integer> pizzaIds) {
+
+		try {
+			List<OrderDTO> response = _service.viewMyOrders(pizzaIds);
+			return new ResponseDTO(1, "Success", response);
+		} catch (Exception ex) {
+			return new ResponseDTO(0, ex.getMessage().toString(), null);
+		}
+
+	}
 }

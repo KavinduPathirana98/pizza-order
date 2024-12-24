@@ -48,16 +48,45 @@ public class PizzaService implements IPizzaService {
 
 	}
 	@Override
-	public List<PizzaDTO> getUserPizza(int userId) {
+	public PizzaDTO updatePizza(int id,boolean isFav)
+	{
 		try {
-			List<PizzaDTO> response = new ArrayList<>();
-			List<Pizza> data = new ArrayList<>();
-			data = _repo.findPizzaByUserId(userId);
-			BeanUtils.copyProperties(data, response);
-			return response;
+			Pizza pizza = new Pizza();
+			
+			int response = _repo.updatePizzaFavourite(id,isFav);
+			PizzaDTO returnObect = new PizzaDTO();
+			BeanUtils.copyProperties(response, returnObect);
+			return returnObect;
 		} catch (Exception ex) {
 			throw ex;
 		}
-
 	}
+	@Override
+	
+	public List<PizzaDTO> getUserPizza(int userId) {
+	    try {
+	        List<PizzaDTO> response = new ArrayList<>();
+	        List<Pizza> data = _repo.findPizzaByUserId(userId); // Pass the userId to the repository method
+	        for (int i = 0; i < data.size(); i++) {  // Change the condition to i < data.size()
+	            PizzaDTO pizzaDTO = new PizzaDTO();
+	            pizzaDTO.setId(data.get(i).getId());
+	            pizzaDTO.setName(data.get(i).getName());
+	            pizzaDTO.setCrust(data.get(i).getCrust());
+	            pizzaDTO.setSauce(data.get(i).getSauce());
+	            pizzaDTO.setToppings(data.get(i).getToppings());
+	            pizzaDTO.setCheese(data.get(i).getCheese());
+	            pizzaDTO.setSize(data.get(i).getSize());
+	            pizzaDTO.setPrice(data.get(i).getPrice());
+	            pizzaDTO.setFavourite(data.get(i).isFavourite());
+	          //  pizzaDTO.setUser(data.get(i).getUser()); // Copy the User object
+	            
+	            response.add(pizzaDTO);
+	        }
+	        
+	        return response;
+	    } catch (Exception ex) {
+	        throw ex;
+	    }
+	}
+
 }

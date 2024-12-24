@@ -9,5 +9,6 @@ public interface IPizzaService {
 	
 	PizzaDTO addPizza(PizzaDTO pizzaDTO);
 	PizzaDTO updatePizza(PizzaDTO pizzaDTO);
+	PizzaDTO updatePizza(int id,boolean isFav);//method overloading
 	List<PizzaDTO> getUserPizza(int userId);
 }

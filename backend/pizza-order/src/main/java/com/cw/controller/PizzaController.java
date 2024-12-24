@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,17 @@ public class PizzaController {
 		}
 
 	}
-	
+	@PutMapping("/fav/{id}/{active}")
+	public ResponseDTO updatePizza(@PathVariable int id,@PathVariable boolean active) {
+
+		try {
+			PizzaDTO response = _service.updatePizza(id,active);
+			return new ResponseDTO(1, "Success", response);
+		} catch (Exception ex) {
+			return new ResponseDTO(0, ex.getMessage().toString(), null);
+		}
+
+	}
 	@GetMapping("/{userId}")
 	public ResponseDTO getUserPizza(@PathVariable int userId) {
 
