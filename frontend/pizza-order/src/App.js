@@ -11,6 +11,7 @@ import SignUp from "./pages/signup";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import MakePizza from "./pages/make-pizza";
+import Orders from "./pages/orders";
 
 function App() {
   const authenticated = localStorage.getItem("authenticated");
@@ -23,7 +24,7 @@ function App() {
         <Nav className="me-auto">
           <Nav.Link href="/home">Home</Nav.Link>
           <Nav.Link href="/make">Make Pizza</Nav.Link>
-          <Nav.Link href="/treatments">Orders</Nav.Link>
+          <Nav.Link href="/orders">Orders</Nav.Link>
           <Nav.Link href="/invoice">Logout</Nav.Link>
         </Nav>
       </Container>
@@ -52,7 +53,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/make" element={<MakePizza />} />
-
+          <Route path="/orders" element={<Orders />} />
           {/* Additional routes can be added here */}
         </Routes>
       </Layout>

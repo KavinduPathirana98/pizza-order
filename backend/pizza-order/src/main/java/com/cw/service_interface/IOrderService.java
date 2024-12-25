@@ -10,5 +10,5 @@ public interface IOrderService {
 	
 	OrderDTO addOrder(OrderDTO orderDTO, int paymentMethod, double amount);
 	OrderDTO updateOrder(OrderDTO orderDTO);
-	List<OrderDTO> viewMyOrders(List<Integer> pizzaIds);
+	List<OrderDTO> viewMyOrders(String pizzaIds);
 }

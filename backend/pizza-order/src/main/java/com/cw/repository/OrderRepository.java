@@ -12,6 +12,6 @@ import com.cw.entity.User;
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Integer> {
 
-    @Query("SELECT u FROM Order u WHERE u.pizza.id IN :pizzaIds")
-    List<Order> findOrdersByPizzaIds(@Param("pizzaIds") List<Integer> pizzaIds);
+	@Query(value = "SELECT * FROM pizza_order WHERE pizza_id IN (:pizzaIds)", nativeQuery = true)
+	List<Order> findOrdersByPizzaIds(@Param("pizzaIds") List<Integer> pizzaIds);
 }

@@ -1,15 +1,21 @@
 package com.cw.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cw.dto.OrderDTO;
+import com.cw.dto.PizzaDTO;
+import com.cw.dto.OrderDTO;
 import com.cw.entity.LoyaltyAccount;
 import com.cw.entity.Order;
 import com.cw.entity.Payment;
+import com.cw.entity.Pizza;
+import com.cw.entity.User;
 import com.cw.repository.LoyaltyAccountRepository;
 import com.cw.repository.OrderRepository;
 import com.cw.repository.PaymentRepository;
@@ -99,10 +105,40 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public List<OrderDTO> viewMyOrders(List<Integer> pizzaIds) {
+	public List<OrderDTO> viewMyOrders(String pizzaIds) {
 		try {
 			List<OrderDTO> response = new ArrayList<>();
-			List<Order> order = _repo.findOrdersByPizzaIds(pizzaIds);
+			 // Convert comma-separated string to List<Integer>
+		    List<Integer> pizzaIdList = Arrays.stream(pizzaIds.split(","))
+		                                      .map(String::trim) // Remove any extra spaces
+		                                      .map(Integer::parseInt) // Convert to Integer
+		                                      .collect(Collectors.toList());
+
+		
+			List<Order> order = _repo.findOrdersByPizzaIds(pizzaIdList);
+			
+			   for (int i = 0; i < order.size(); i++) {  // Change the condition to i < data.size()
+		            OrderDTO orderDTO = new OrderDTO();
+		            orderDTO.setId(order.get(i).getId());
+		            orderDTO.setAddress(order.get(i).getAddress());
+		            orderDTO.setType(order.get(i).getType());
+		            orderDTO.setStatus(order.get(i).getStatus());
+		            orderDTO.setTp(order.get(i).getTp());
+		            
+		            Pizza Pizza = new Pizza();
+		            Pizza.setCheese(order.get(i).getPizza().getCheese());
+		            Pizza.setName(order.get(i).getPizza().getName());
+		            Pizza.setCrust(order.get(i).getPizza().getCrust());
+		            Pizza.setSauce(order.get(i).getPizza().getSauce());
+		            Pizza.setToppings(order.get(i).getPizza().getToppings());
+		            Pizza.setSize(order.get(i).getPizza().getSize());
+		            Pizza.setPrice(order.get(i).getPizza().getPrice());
+		            
+		            User user=new User();
+		            
+		            orderDTO.setPizza(Pizza);
+		            response.add(orderDTO);
+		        }
 			BeanUtils.copyProperties(order, response);
 			return response;
 		} catch (Exception ex) {

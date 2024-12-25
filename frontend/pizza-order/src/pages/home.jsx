@@ -24,8 +24,13 @@ const Home = () => {
   const getMyPizza = async () => {
     await GetPizza(userId)
       .then((response) => {
+        const arr = [];
         console.log(response.data.responseCode);
         if (response.data.responseCode === 1) {
+          response.data.data.map((item) => {
+            arr.push(item.id);
+          });
+          localStorage.setItem("pizzaIds", arr);
           setPizza(response.data.data);
         } else {
           toast.error(toastFetchingError);

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,8 @@ public class OrderController {
 
 	@Autowired
 	private IOrderService _service;
-	@PostMapping("/add")
-	public ResponseDTO addOrder(@RequestBody OrderDTO orderDTO,@RequestParam int paymentMethod,@RequestParam double amount) {
+	@PostMapping("/add/{paymentMethod}/{amount}")
+	public ResponseDTO addOrder(@RequestBody OrderDTO orderDTO,@PathVariable int paymentMethod,@PathVariable double amount) {
 
 		try {
 			OrderDTO response = _service.addOrder(orderDTO,paymentMethod,amount);
@@ -45,8 +47,8 @@ public class OrderController {
 
 	}
 	
-	@PostMapping("/viewMyOrders")
-	public ResponseDTO viewMyOrders(@RequestParam  List<Integer> pizzaIds) {
+	@GetMapping("/viewMyOrders/{pizzaIds}")
+	public ResponseDTO viewMyOrders(@PathVariable  String pizzaIds) {
 
 		try {
 			List<OrderDTO> response = _service.viewMyOrders(pizzaIds);
