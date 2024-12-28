@@ -24,7 +24,7 @@ public class FeedbackController {
 	@Autowired
 	private IFeedBackService _service;
 	
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseDTO addFeedBack(@RequestBody FeedBackDTO feedBackDTO) {
 
 		try {

@@ -12,3 +12,15 @@ export const UserLogin = (model) => {
     });
   return response;
 };
+
+export const SignUpUser = async (model) => {
+  const response = axios
+    .post(API_URL + "user/save", model)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};

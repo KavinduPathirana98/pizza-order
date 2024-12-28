@@ -4,3 +4,4 @@ export const msgRequired = "Required";
 export const toastFetchingError = "Error While Fetching Data";
 export const toastSaveError = "Error While Update Data";
 export const toastSaveSuccess = "Successfully Updated Data";
+export const toastSignupSuccess = "Successfully Signed Up ";

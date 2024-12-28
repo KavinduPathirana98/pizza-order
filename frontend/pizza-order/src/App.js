@@ -12,19 +12,27 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import MakePizza from "./pages/make-pizza";
 import Orders from "./pages/orders";
+import Promotions from "./pages/promotions";
+import AdminPromotions from "./pages/admin-promotion";
 
 function App() {
   const authenticated = localStorage.getItem("authenticated");
-
+  const user = JSON.parse(localStorage.getItem("user"));
   // Navigation Bar Component
   const NavigationBar = () => (
     <Navbar bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href="/home">Pizza Shop</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/home">Home</Nav.Link>
-          <Nav.Link href="/make">Make Pizza</Nav.Link>
-          <Nav.Link href="/orders">Orders</Nav.Link>
+          {user.type == 1 ? <Nav.Link href="/home">Home</Nav.Link> : ""}
+          {user.type == 1 ? <Nav.Link href="/make">Make Pizza</Nav.Link> : ""}
+          {user.type == 1 ? <Nav.Link href="/orders">Orders</Nav.Link> : ""}
+
+          {user.type == 1 ? (
+            <Nav.Link href="/promotions">Promotions</Nav.Link>
+          ) : (
+            <Nav.Link href="/admin-promotions">Promotions</Nav.Link>
+          )}
           <Nav.Link href="/invoice">Logout</Nav.Link>
         </Nav>
       </Container>
@@ -54,6 +62,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/make" element={<MakePizza />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/promotions" element={<Promotions />} />
+          <Route path="/admin-promotions" element={<AdminPromotions />} />
           {/* Additional routes can be added here */}
         </Routes>
       </Layout>

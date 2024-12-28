@@ -58,7 +58,7 @@ public class PromotionController {
 		}
 
 	}
-	@GetMapping
+	@GetMapping("/getall")
 	public ResponseDTO viewPromotion() {
 
 		try {

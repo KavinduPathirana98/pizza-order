@@ -35,7 +35,16 @@ public class PromotionService implements IPromotionService{
 	public List<PromotionDTO> viewPromotion() {
 		try {
 			List<PromotionDTO> response = new ArrayList<>();
-			BeanUtils.copyProperties(_repo.findAll(), response);
+			List<Promotion>returnData=_repo.findAll();
+			 for (int i = 0; i < returnData.size(); i++) 
+			 {
+				 PromotionDTO dto=new PromotionDTO();
+				 dto.setDiscountPrice(returnData.get(i).getDiscountPrice());
+				 dto.setType(returnData.get(i).getType());
+				 response.add(dto);
+			 }
+			 
+			
 			return response;
 		} catch (Exception ex) {
 			throw ex;
